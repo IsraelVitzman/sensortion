@@ -10,17 +10,27 @@ namespace sensor
     internal class agent
     {   
         Random random= new Random();
-        private string[] rank;
         Sensor sensor=new Sensor();
-        string [] agentIrani;
-        private Dictionary<string, Func<string>> sensorActions;
 
+        Dictionary<String ,int> rank ;
+        Dictionary<string, Func<string>> sensorActions;
+
+
+        private string[] agentIrani;
 
         public agent()
         {
-            rank = new string[] { "Foot Soldier", "Squad Leader", "Senior Commander", "Organization Leader" };
-            sensorActions = new Dictionary<string, Func<string>>()
-            {
+           rank = new Dictionary<string, int>()
+           {
+               { "Foot Soldier", 2 },
+               { "Squad Leader", 4 },
+               { "Senior Commander", 8 },
+               { "Organization Leader", 10 }
+           };
+
+
+           sensorActions = new Dictionary<string, Func<string>>()
+           {
               { "Audio",sensor. Audio },
               { "Thermal",sensor. Thermal},
               { "Pulse",sensor. Pulse },
@@ -28,7 +38,7 @@ namespace sensor
               { "Magnetic", sensor.Magnetic},
               { "Signal", sensor.Signal },
               { "Light", sensor.Light }
-            };
+           };
         }   
         
         public  void NewAgent()
