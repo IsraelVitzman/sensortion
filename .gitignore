@@ -1,0 +1,31 @@
+# Build results
+bin/
+obj/
+
+# VS specific folders
+.vs/
+*.user
+*.suo
+
+# NuGet packages
+*.nupkg
+packages/
+*.snupkg
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Other
+*.DS_Store
+*.class
+*.cache
+*.pdb
+*.dbmdl
+
+# Rider / JetBrains (אם השתמשת בהם)
+.idea/
