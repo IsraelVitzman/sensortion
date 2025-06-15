@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 
 namespace sensor
 {
-    internal class agent
+    internal class Agent
     {   
         Random random= new Random();
         Sensor sensor=new Sensor();
 
         Dictionary<String ,int> rank ;
         Dictionary<string, Func<string>> sensorActions;
-
         Dictionary<string, Func<string>> iraniAgent;
 
 
-        public agent()
+        int randomRank;
+        int randSensorActions;
+
+
+        public Agent()
         {
            rank = new Dictionary<string, int>()
            {
@@ -44,14 +47,14 @@ namespace sensor
         public  void NewAgent(string name)
         {
             iraniAgent = new Dictionary<string, Func<string>>();
-            int randomRank = random.Next(0, rank.Count);
+            randomRank = random.Next(0, rank.Count);
 
 
             List<string> keys = sensorActions.Keys.ToList();
 
             for (int i = 0; i < randomRank; i++) 
             {
-                int randSensorActions=random.Next(keys.Count);
+                randSensorActions=random.Next(keys.Count);
 
                 
                 iraniAgent.Add(keys[randSensorActions], sensorActions[keys[randSensorActions]]);
@@ -62,5 +65,32 @@ namespace sensor
 
             }
         }
+        public Dictionary<string, Func<string>> GetAgent()
+        {   
+            return iraniAgent;
+        }
+
+
+        public int GetAgentLengte()
+        {
+            return iraniAgent.Count();
+        }
+
+
+
+        public string getRank() 
+        {
+            foreach (int key in rank.Values)
+            {
+               if (key == randomRank)
+               {    
+                    // צריך טיפול זה לא יעב דוד כי הוא מביא סתם סטרינג לא ברור
+                    return key.ToString();
+               }
+            }
+            return "";
+        
+        }
+
     }
 }

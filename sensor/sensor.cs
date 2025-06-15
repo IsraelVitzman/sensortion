@@ -9,8 +9,10 @@ namespace sensor
     internal class Sensor
     {
         private string[] sensors;
-        private string[] rank;
-       
+        Random random =new Random();
+        Agent agent =new Agent();
+        int countToPulse = 3;
+        int countToMotion = 3;
 
         public Sensor()
         {
@@ -29,21 +31,34 @@ namespace sensor
 
         public string Thermal()
         {
-            return "";
+            List<string> keys = agent.GetAgent().Keys.ToList();
+            return keys[random.Next(keys.Count)];
         }
 
 
         public string Pulse()
         {
+            countToPulse -= 1;
+            if (countToPulse == 0) 
+            {
+                agent.GetAgent().Remove("Pulse");
+                return "remove Pulse";
+            }
             return "";
         }
 
 
         public string Motion()
         {
-
-
+            countToMotion -= 1;
+            if (countToMotion == 0)
+            {
+                agent.GetAgent().Remove("Motion");
+                return "remove Motion";
+            }
             return "";
+
+          
         }
 
 
@@ -51,7 +66,7 @@ namespace sensor
         public string Magnetic()
         {
 
-
+            // לקשר לפונקציה של הדרגות יש לבנות אותה בהמשך ..בקלאס .
             return "";
         }
 
