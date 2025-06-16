@@ -9,15 +9,21 @@ namespace sensor
     internal class Sensor
     {
         private string[] sensors;
+
+        
         Random random =new Random();
         Agent agent;
-        int countToPulse = 3;
-        int countToMotion = 3;
+        Rank rank;
+
+
+        int countToPulse;
+        int countToMotion;
 
         public Sensor()
         {
             sensors = new string[] { "Audio", "Thermal", "Pulse", "Motion", "Magnetic", "Signal", "Light" };
-            
+            countToPulse = 3;
+            countToMotion = 3;
         }
 
 
@@ -72,7 +78,7 @@ namespace sensor
         public string Signal()
         {
 
-            return agent.getRank();
+            return rank.getRank1();
         }
 
 

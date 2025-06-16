@@ -45,9 +45,12 @@
   <ItemGroup>
     <Compile Include="Activate.cs" />
     <Compile Include="agent.cs" />
+    <Compile Include="AgentRankBehavior.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rank.cs" />
     <Compile Include="sensor.cs" />
+    <Compile Include="sensorFectory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

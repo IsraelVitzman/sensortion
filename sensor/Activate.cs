@@ -8,47 +8,52 @@ using System.Threading.Tasks;
 namespace sensor
 {
     internal class Activate
-    {
-        Agent agent = new Agent();
-        int count = 0;
-       
+    {   
+        Agent agent;
+        int count;
 
         public void FindAgent(string sensorToPlayer)
-        {   //יכול להיות להיות בעיה שהוא יוריד ..
+        {
             int countForSensorIrani = agent.GetAgentLengte();
+            List<string> sensorsToScored = new List<string>();
 
             while (true)
-            {   // לוגיקה לרוץ על הקאי שהוא סטרינג ולהשוות לסטרינג של השחקן מכניס אם קיים להוריד אותו מהדיקשנקי ולשים נקודה 
-                foreach (string sensor in agent.GetAgent().Keys)
+            {
+                
+                if (countForSensorIrani == count)
                 {
+                    Console.WriteLine("ניצחת כל הכבוד !!!");
+                    return;
+                }
 
+                foreach (string scored in sensorsToScored)
+                {
                     
-                    if (agent.GetAgent().Keys == null)
-                    {
-                        Console.WriteLine("ניצחת כל הכבוד !!!");
-                        return;
-                    }
 
+                }
 
-
+                foreach (string sensor in agent.GetAgent().Keys.ToList()) 
+                {
                     if (sensorToPlayer.Equals(sensor))
                     {
                         
 
-                        count += 1;
+                       
+                        Console.WriteLine(agent.GetAgent()[sensor]());
 
-                        //לבדוק האם זה מפעיל את כל הפונקציות 
-                        Console.WriteLine(agent.GetAgent()[sensor]);
-                        //לבדוק שזה אפשרי במהלך התוכנית
-                        agent.GetAgent().Remove(sensor);
+                        sensorsToScored.Add(sensor);
 
-                        Console.WriteLine($"{countForSensorIrani}מתוך   {count}קלעת !! נשאר ");
-
+                        Console.WriteLine($"{countForSensorIrani} מתוך {count} קלעת!! נשאר ");
                     }
-
-                   
                 }
+
+                
+               
             }
         }
+
+
+
+
     }
 }

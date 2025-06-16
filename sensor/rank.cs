@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace sensor
 {
-    internal class rank
+    internal class Rank
     {
         Dictionary<String, int> ranks;
 
-        public rank() 
+        public Rank() 
         {
             ranks = new Dictionary<string, int>()
             {
@@ -21,7 +21,13 @@ namespace sensor
             };
 
         }
-        public string getRank()
+        public Dictionary<string, int> getRank()
+        {
+            return ranks;
+        }
+
+
+        public string getRank1()
         {
             foreach (int key in ranks.Values)
             {

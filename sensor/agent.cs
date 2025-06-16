@@ -11,7 +11,6 @@ namespace sensor
     {   
         Random random= new Random();
 
-        Sensor sensor;
         SensorFectory sensorFectory;
         Rank rank;
 
@@ -19,33 +18,36 @@ namespace sensor
         Dictionary<string, Func<string>> iraniAgent;
 
 
-        int randomRank;
+
+        Action selectedKey;
+        int selectedValue;
         int randSensorActions;
 
 
-      
-        
         public  void NewAgent(string name)
         {
             iraniAgent = new Dictionary<string, Func<string>>();
-            randomRank = random.Next(0, rank.getRank().Count);
+
+            var randomEntry = rank.GetRank().ElementAt(random.Next(rank.GetRank().Count));
+
+            
+            selectedKey = randomEntry.Key;
+            selectedValue = randomEntry.Value;
 
 
             List<string> keys = sensorFectory.getSensorFectory().Keys.ToList();
 
-            for (int i = 0; i < randomRank; i++) 
+            for (int i = 0; i < selectedValue; i++) 
             {
                 randSensorActions=random.Next(keys.Count);
 
                 
                 iraniAgent.Add(keys[randSensorActions], sensorFectory.getSensorFectory()[keys[randSensorActions]]);
 
-                //צריך לטפל במצב שהוא כבר קיים בתוך האירני 
-                // לבדוק שהקוד תקין מצד תחביר שלו
-
 
             }
         }
+
         public Dictionary<string, Func<string>> GetAgent()
         {   
             return iraniAgent;
@@ -57,8 +59,11 @@ namespace sensor
             return iraniAgent.Count();
         }
 
-
-
+        public Action getRank()
+        {
+            return selectedKey;
+        }
+       
         
 
     }
