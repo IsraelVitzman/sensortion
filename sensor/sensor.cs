@@ -10,7 +10,7 @@ namespace sensor
     {
         private string[] sensors;
         Random random =new Random();
-        Agent agent =new Agent();
+        Agent agent;
         int countToPulse = 3;
         int countToMotion = 3;
 
@@ -19,8 +19,6 @@ namespace sensor
             sensors = new string[] { "Audio", "Thermal", "Pulse", "Motion", "Magnetic", "Signal", "Light" };
             
         }
-
-
 
 
         public string Audio()
@@ -74,14 +72,15 @@ namespace sensor
         public string Signal()
         {
 
-            return "";
+            return agent.getRank();
         }
 
 
         public string Light()
         {
+            List<string> keys = agent.GetAgent().Keys.ToList();
+            return $"{keys[random.Next(keys.Count)]} , {keys[random.Next(keys.Count)]}";
 
-            return "";
         }
 
 

@@ -16,19 +16,39 @@ namespace sensor
         public void FindAgent(string sensorToPlayer)
         {   //יכול להיות להיות בעיה שהוא יוריד ..
             int countForSensorIrani = agent.GetAgentLengte();
-            // לוגיקה לרוץ על הקאי שהוא סטרינג ולהשוות לסטרינג של השחקן מכניס אם קיים להוריד אותו מהדיקשנקי ולשים נקודה 
-            foreach (string sensor in agent.GetAgent().Keys)
-            { 
 
-                if (sensorToPlayer.Equals(sensor)) 
-                { 
-                    agent.GetAgent().Remove(sensor);
-                    count += 1;
-                    Console.WriteLine($"{countForSensorIrani}מתוך   {count}קלעת !! נשאר ");
+            while (true)
+            {   // לוגיקה לרוץ על הקאי שהוא סטרינג ולהשוות לסטרינג של השחקן מכניס אם קיים להוריד אותו מהדיקשנקי ולשים נקודה 
+                foreach (string sensor in agent.GetAgent().Keys)
+                {
+
+                    
+                    if (agent.GetAgent().Keys == null)
+                    {
+                        Console.WriteLine("ניצחת כל הכבוד !!!");
+                        return;
+                    }
+
+
+
+                    if (sensorToPlayer.Equals(sensor))
+                    {
+                        
+
+                        count += 1;
+
+                        //לבדוק האם זה מפעיל את כל הפונקציות 
+                        Console.WriteLine(agent.GetAgent()[sensor]);
+                        //לבדוק שזה אפשרי במהלך התוכנית
+                        agent.GetAgent().Remove(sensor);
+
+                        Console.WriteLine($"{countForSensorIrani}מתוך   {count}קלעת !! נשאר ");
+
+                    }
+
+                   
                 }
-                
             }
-
         }
     }
 }
