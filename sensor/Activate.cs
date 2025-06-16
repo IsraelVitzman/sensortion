@@ -11,26 +11,26 @@ namespace sensor
     {   
         Agent agent;
         int count;
+        List<string> sensorsToScored = new List<string>();
+      
+
 
         public void FindAgent(string sensorToPlayer)
         {
-            int countForSensorIrani = agent.GetAgentLengte();
-            List<string> sensorsToScored = new List<string>();
+            
+          
+            List<string> keys = agent.GetAgent().Keys.ToList();
 
             while (true)
             {
                 
-                if (countForSensorIrani == count)
+                if (count == agent.GetAgentLengte())
                 {
-                    Console.WriteLine("ניצחת כל הכבוד !!!");
+                    Console.WriteLine("ניצחת");
                     return;
                 }
 
-                foreach (string scored in sensorsToScored)
-                {
-                    
-
-                }
+                
 
                 foreach (string sensor in agent.GetAgent().Keys.ToList()) 
                 {
@@ -43,13 +43,30 @@ namespace sensor
 
                         sensorsToScored.Add(sensor);
 
-                        Console.WriteLine($"{countForSensorIrani} מתוך {count} קלעת!! נשאר ");
+                        Console.WriteLine($"{agent.GetAgentLengte()} מתוך {count} קלעת!! נשאר ");
                     }
                 }
 
-                
-               
+                foreach (string scored in sensorsToScored)
+                {
+                    if (!keys.Contains(scored))
+                    {
+                        count += 1;
+                    }
+
+                }
+
+
+
             }
+        }
+        public List<string> GetScored()
+        {
+            return sensorsToScored;
+        }
+        public int GetLengteScored()
+        {
+            return sensorsToScored.Count;
         }
 
 

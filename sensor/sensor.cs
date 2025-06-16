@@ -78,7 +78,7 @@ namespace sensor
         public string Signal()
         {
 
-            return rank.getRank1();
+            return "";
         }
 
 

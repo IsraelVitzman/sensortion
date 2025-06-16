@@ -6,40 +6,28 @@ using System.Threading.Tasks;
 
 namespace sensor
 {
-    internal class Rank
+    public class Rank
     {
-        Dictionary<String, int> ranks;
+        Dictionary<Action, int> ranks;
+        AgentRankBehavior agentRankBehavior;
 
-        public Rank() 
+        public Rank()
         {
-            ranks = new Dictionary<string, int>()
-            {
-               { "Foot Soldier", 2 },
-               { "Squad Leader", 4 },
-               { "Senior Commander", 8 },
-               { "Organization Leader", 10 }
-            };
+            agentRankBehavior = new AgentRankBehavior();
 
+            ranks = new Dictionary<Action, int>()
+            {
+              { agentRankBehavior.FootSoldier, 2 },
+              { agentRankBehavior.SquadLeader, 4 },
+              { agentRankBehavior.SeniorCommander, 8 },
+              { agentRankBehavior.OrganizationLeader, 10 }
+            };
         }
-        public Dictionary<string, int> getRank()
+
+        public Dictionary<Action, int> GetRank()
         {
             return ranks;
         }
-
-
-        public string getRank1()
-        {
-            foreach (int key in ranks.Values)
-            {
-                if (key == 0)
-                {
-                    // צריך טיפול זה לא יעב דוד כי הוא מביא סתם סטרינג לא ברור
-                    return key.ToString();
-                }
-            }
-            return "";
-
-        }
-
     }
+
 }
