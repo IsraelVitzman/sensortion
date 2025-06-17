@@ -8,26 +8,23 @@ namespace sensor
 {
     public class Rank
     {
-        Dictionary<Action, int> ranks;
-        AgentRankBehavior agentRankBehavior;
+        private Dictionary<string, int> ranks;
 
         public Rank()
         {
-            agentRankBehavior = new AgentRankBehavior();
-
-            ranks = new Dictionary<Action, int>()
+            ranks = new Dictionary<string, int>()
             {
-              { agentRankBehavior.FootSoldier, 2 },
-              { agentRankBehavior.SquadLeader, 4 },
-              { agentRankBehavior.SeniorCommander, 8 },
-              { agentRankBehavior.OrganizationLeader, 10 }
+                { "FootSoldier", 2 },
+                { "SquadLeader", 4 },
+                { "SeniorCommander", 8 },
+                { "OrganizationLeader", 10 }
             };
         }
 
-        public Dictionary<Action, int> GetRank()
+        public Dictionary<string, int> GetRank()
         {
             return ranks;
         }
-    }
 
+    }
 }

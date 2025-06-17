@@ -1,96 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace sensor
 {
     internal class Sensor
     {
-        private string[] sensors;
+        private Agent agent;
+        private int countToPulse;
+        private int countToMotion;
+        private Random random = new Random();
 
-        
-        Random random =new Random();
-        Agent agent;
-        Rank rank;
-
-
-        int countToPulse;
-        int countToMotion;
-
-        public Sensor()
+        public Sensor(Agent agentRef)
         {
-            sensors = new string[] { "Audio", "Thermal", "Pulse", "Motion", "Magnetic", "Signal", "Light" };
+            agent = agentRef;
             countToPulse = 3;
             countToMotion = 3;
         }
 
-
         public string Audio()
         {
-            return "";
+            return "אין התקפת נגד";
         }
-
 
         public string Thermal()
         {
             List<string> keys = agent.GetAgent().Keys.ToList();
+            if (keys.Count == 0)
+            {
+                return "אין חיישנים";
+            }
             return keys[random.Next(keys.Count)];
         }
 
-
         public string Pulse()
         {
-            countToPulse -= 1;
-            if (countToPulse == 0) 
+            countToPulse--;
+            if (countToPulse == 0)
             {
-                agent.GetAgent().Remove("Pulse");
-                return "remove Pulse";
+                agent.RemoveSensor("Pulse");
+                return "הוסר Pulse";
             }
             return "";
         }
-
 
         public string Motion()
         {
-            countToMotion -= 1;
+            countToMotion--;
             if (countToMotion == 0)
             {
-                agent.GetAgent().Remove("Motion");
-                return "remove Motion";
+                agent.RemoveSensor("Motion");
+                return "הוסר Motion";
             }
             return "";
-
-          
         }
-
-
 
         public string Magnetic()
         {
+            var rank = agent.GetRank();
 
-            // לקשר לפונקציה של הדרגות יש לבנות אותה בהמשך ..בקלאס .
-            return "";
+            return "דרגת סוכן: " + rank;
         }
-
 
         public string Signal()
         {
-
-            return "";
+            return "Signal פעיל";
         }
-
 
         public string Light()
         {
             List<string> keys = agent.GetAgent().Keys.ToList();
-            return $"{keys[random.Next(keys.Count)]} , {keys[random.Next(keys.Count)]}";
 
+            if (keys.Count < 2)
+            {
+                return "אין מספיק חיישנים";
+            }
+            return keys[random.Next(keys.Count)] + " , " + keys[random.Next(keys.Count)];
         }
-
-
-
-
     }
-}
+
+} 

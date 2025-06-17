@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ameStete.cs" />
     <Compile Include="Activate.cs" />
     <Compile Include="agent.cs" />
     <Compile Include="AgentRankBehavior.cs" />

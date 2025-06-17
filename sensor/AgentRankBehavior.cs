@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace sensor
 {
+    
     internal class AgentRankBehavior
     {
-        Random random = new Random();
-        Activate activate;
-        int squadLeaderCount = 0;
-        int seniorCommanderCount = 0;
-        int organizationLeaderCount = 0;
+        private Random random = new Random();
+        private GameState gameState;
+        private int squadLeaderCount = 0;
+        private int seniorCommanderCount = 0;
+        private int organizationLeaderCount = 0;
 
-        
-      
+        public AgentRankBehavior(GameState state)
+        {
+            gameState = state;
+        }
 
         public void FootSoldier()
         {
@@ -25,78 +28,94 @@ namespace sensor
 
         public void SquadLeader()
         {
-            squadLeaderCount = squadLeaderCount + 1;
+            squadLeaderCount++;
             if (squadLeaderCount == 3)
             {
-                
-                if (activate.GetScored().Count > 0)
+                if (gameState.GetScored().Count > 0)
                 {
-                    int randomIndex = random.Next(activate.GetScored().Count);
-                    string sensorToRemove = activate.GetScored()[randomIndex];
-                    activate.GetScored().Remove(sensorToRemove);
+                    int randomIndex = random.Next(gameState.GetScored().Count);
+
+                    string sensorToRemove = gameState.GetScored()[randomIndex];
+
+                    gameState.RemoveScored(sensorToRemove);
+
                     Console.WriteLine("Squad Leader התקפת נגד! הוסר סנסור אחד!");
                 }
-                squadLeaderCount = 0; 
+                squadLeaderCount = 0;
             }
         }
 
         public void SeniorCommander()
         {
-            seniorCommanderCount = seniorCommanderCount + 1;
+            seniorCommanderCount++;
             if (seniorCommanderCount == 3)
             {
-                
-                int sensorsToRemove = 2;
-                if (activate.GetScored().Count < 2)
-                {
-                    sensorsToRemove = activate.GetScored().Count;
-                }
+                int sensorsToRemove = Math.Min(2, gameState.GetScored().Count);
 
                 for (int i = 0; i < sensorsToRemove; i++)
                 {
-                    if (activate.GetScored().Count > 0)
+                    if (gameState.GetScored().Count > 0)
                     {
-                        int randomIndex = random.Next(activate.GetScored().Count);
-                        string sensorToRemove = activate.GetScored()[randomIndex];
-                        activate.GetScored().Remove(sensorToRemove);
+                        int randomIndex = random.Next(gameState.GetScored().Count);
+
+                        string sensorToRemove = gameState.GetScored()[randomIndex];
+
+                        gameState.RemoveScored(sensorToRemove);
                     }
                 }
-
                 if (sensorsToRemove > 0)
                 {
-                    Console.WriteLine("Senior Commander התקפת נגד! הוסרו " + sensorsToRemove + " סנסורים!");
+                    Console.WriteLine($"Senior Commander התקפת נגד! הוסרו {sensorsToRemove} סנסורים!");
                 }
-                seniorCommanderCount = 0; 
+                seniorCommanderCount = 0;
             }
         }
 
         public void OrganizationLeader()
         {
-            organizationLeaderCount = organizationLeaderCount + 1;
+            organizationLeaderCount++;
 
-            
             if (organizationLeaderCount == 10)
             {
-                activate.GetScored().Clear();
+                gameState.ClearScored();
+
+
                 Console.WriteLine("Organization Leader התקפת נגד גדולה! כל הסנסורים הוסרו!");
-                organizationLeaderCount = 0; 
+
+                organizationLeaderCount = 0;
             }
-            
             else if (organizationLeaderCount % 3 == 0)
             {
-                if (activate.GetScored().Count > 0)
+                if (gameState.GetScored().Count > 0)
                 {
-                    int randomIndex = random.Next(activate.GetScored().Count);
-                    string sensorToRemove = activate.GetScored()[randomIndex];
-                    activate.GetScored().Remove(sensorToRemove);
+                    int randomIndex = random.Next(gameState.GetScored().Count);
+
+                    string sensorToRemove = gameState.GetScored()[randomIndex];
+
+                    gameState.RemoveScored(sensorToRemove);
+
                     Console.WriteLine("Organization Leader התקפת נגד! הוסר סנסור אחד!");
                 }
             }
         }
 
-        
-
-       
-
+        public void ExecuteRankAction(string rank)
+        {
+            switch (rank)
+            {
+                case "FootSoldier":
+                    FootSoldier();
+                    break;
+                case "SquadLeader":
+                    SquadLeader();
+                    break;
+                case "SeniorCommander":
+                    SeniorCommander();
+                    break;
+                case "OrganizationLeader":
+                    OrganizationLeader();
+                    break;
+            }
+        }
     }
 }

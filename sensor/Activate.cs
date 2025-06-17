@@ -8,69 +8,79 @@ using System.Threading.Tasks;
 namespace sensor
 {
     internal class Activate
-    {   
-        Agent agent;
-        int count;
-        List<string> sensorsToScored = new List<string>();
-      
+    {
+        private Agent agent;
+        private GameState gameState;
+        private AgentRankBehavior rankBehavior;
+        private int count;
 
+        public Activate()
+        {
+            agent = new Agent();
+            gameState = new GameState();
+            rankBehavior = new AgentRankBehavior(gameState);
+            count = 0;
+        }
+
+        public void StartGame()
+        {
+            agent.NewAgent();
+        }
 
         public void FindAgent(string sensorToPlayer)
         {
-            
-          
-            List<string> keys = agent.GetAgent().Keys.ToList();
-
-            while (true)
+            if (count >= agent.GetAgentLength())
             {
-                
-                if (count == agent.GetAgentLengte())
+                Console.WriteLine("ניצחת");
+                return;
+            }
+
+            bool foundSensor = false;
+
+            foreach (string sensor in agent.GetAgent().Keys.ToList())
+            {
+                if (sensorToPlayer.Equals(sensor))
                 {
-                    Console.WriteLine("ניצחת");
-                    return;
+                    Console.WriteLine(agent.GetAgent()[sensor]());
+
+                    gameState.AddScored(sensor);
+
+                    count++;
+
+                    foundSensor = true;
+
+                    Console.WriteLine($"קלעת!! נשאר {agent.GetAgentLength() - count} מתוך {agent.GetAgentLength()}");
+
+                  
+                    rankBehavior.ExecuteRankAction(agent.GetRank());
+
+                    break;
                 }
+            }
 
-                
-
-                foreach (string sensor in agent.GetAgent().Keys.ToList()) 
-                {
-                    if (sensorToPlayer.Equals(sensor))
-                    {
-                        
-
-                       
-                        Console.WriteLine(agent.GetAgent()[sensor]());
-
-                        sensorsToScored.Add(sensor);
-
-                        Console.WriteLine($"{agent.GetAgentLengte()} מתוך {count} קלעת!! נשאר ");
-                    }
-                }
-
-                foreach (string scored in sensorsToScored)
-                {
-                    if (!keys.Contains(scored))
-                    {
-                        count += 1;
-                    }
-
-                }
+            Console.WriteLine($" נשאר {agent.GetAgentLength() - count} מתוך {agent.GetAgentLength()}");
 
 
-
+            if (count >= agent.GetAgentLength())
+            {
+                Console.WriteLine("ניצחת");
             }
         }
+
         public List<string> GetScored()
         {
-            return sensorsToScored;
+            return gameState.GetScored();
         }
-        public int GetLengteScored()
+
+        public int GetLengthScored()
         {
-            return sensorsToScored.Count;
+            return gameState.GetLengthScored();
         }
-
-
-
-
     }
 }
+
+
+
+
+    
+

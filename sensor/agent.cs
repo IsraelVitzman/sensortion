@@ -8,63 +8,71 @@ using System.Threading.Tasks;
 namespace sensor
 {
     internal class Agent
-    {   
-        Random random= new Random();
+    {
+        private Random random = new Random();
 
-        SensorFectory sensorFectory;
-        Rank rank;
+        private Rank rank;
+        private SensorFactory sensorFactory;
 
-       
-        Dictionary<string, Func<string>> iraniAgent;
-
+        private Dictionary<string, Func<string>> iraniAgent;
 
 
-        Action selectedKey;
-        int selectedValue;
-        int randSensorActions;
+        private string selectedRankKey;
+        private int selectedRankValue;
 
+        public Agent()
+        {
+            rank = new Rank();
+        }
 
-        public  void NewAgent(string name)
+        public void NewAgent()
         {
             iraniAgent = new Dictionary<string, Func<string>>();
 
-            var randomEntry = rank.GetRank().ElementAt(random.Next(rank.GetRank().Count));
+            var rankDict = rank.GetRank();
+            var randomRankIndex = random.Next(rankDict.Count);
 
-            
-            selectedKey = randomEntry.Key;
-            selectedValue = randomEntry.Value;
+            selectedRankKey = rankDict.Keys.ElementAt(randomRankIndex);
+            selectedRankValue = rankDict[selectedRankKey];
 
+            sensorFactory = new SensorFactory(this);
 
-            List<string> keys = sensorFectory.getSensorFectory().Keys.ToList();
+            List<string> keys = sensorFactory.GetSensorTypes();
 
-            for (int i = 0; i < selectedValue; i++) 
+            while (iraniAgent.Count < selectedRankValue)
             {
-                randSensorActions=random.Next(keys.Count);
+                int randSensorIndex = random.Next(keys.Count);
 
-                
-                iraniAgent.Add(keys[randSensorActions], sensorFectory.getSensorFectory()[keys[randSensorActions]]);
+                string key = keys[randSensorIndex];
 
-
+                if (!iraniAgent.ContainsKey(key))
+                {
+                    iraniAgent.Add(key, sensorFactory.GetSensorFactory()[key]);
+                }
             }
         }
 
         public Dictionary<string, Func<string>> GetAgent()
-        {   
+        {
             return iraniAgent;
         }
 
-
-        public int GetAgentLengte()
+        public int GetAgentLength()
         {
-            return iraniAgent.Count();
+            return iraniAgent.Count;
         }
 
-        public Action getRank()
+        public string GetRank()
         {
-            return selectedKey;
+            return selectedRankKey;
         }
-       
-        
 
+        public void RemoveSensor(string sensorType)
+        {
+            if (iraniAgent.ContainsKey(sensorType))
+            {
+                iraniAgent.Remove(sensorType);
+            }
+        }
     }
 }
